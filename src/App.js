@@ -6,7 +6,7 @@ const initialItems = [
 ];
 function App() {
   //lifting in parent so that it can be accesible for the children
-  const [items, setItems] = useState(initialItems);
+  const [items, setItems] = useState([]);
 
   //create a function so that the children can use setitems
   function handleItems(item) {
@@ -23,10 +23,12 @@ function App() {
 function Form({ onAddItems }) {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
+
+  //handeling form
   function handleForm(e) {
     e.preventDefault();
     if (!description) return;
-    const newItems = [{ description, quantity, packed: false, id: Date.now() }];
+    const newItems = { description, quantity, packed: false, id: Date.now() };
     onAddItems(newItems);
     setDescription("");
     setQuantity(1);
@@ -62,8 +64,8 @@ function List({ items }) {
   return (
     <div className="list">
       <ul>
-        {items.map((items) => (
-          <Listing items={items} />
+        {items.map((item) => (
+          <Listing key={item.id} items={item} />
         ))}
       </ul>
     </div>
@@ -72,8 +74,8 @@ function List({ items }) {
 function Listing({ items }) {
   return (
     <>
-      <li key={items.id}>
-        {items.quantity}- {items.description}
+      <li>
+        {items.quantity}-{items.description}
       </li>
     </>
   );
