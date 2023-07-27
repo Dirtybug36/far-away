@@ -1,9 +1,9 @@
 import { useState } from "react";
 import "./index.css";
-const initialItems = [
-  { id: 1, description: "Passports", quantity: 2, packed: false },
-  { id: 2, description: "Socks", quantity: 12, packed: false },
-];
+// const initialItems = [
+//   { id: 1, description: "Passports", quantity: 2, packed: false },
+//   { id: 2, description: "Socks", quantity: 12, packed: false },
+// ];
 function App() {
   //lifting in parent so that it can be accesible for the children
   const [items, setItems] = useState([]);
@@ -12,11 +12,17 @@ function App() {
   function handleItems(item) {
     setItems((prevItem) => [...prevItem, item]);
   }
+
+  //only filters when the input id is not equal to previous id
+  function handleDeleteItems(id) {
+    setItems((prevItem) => prevItem.filter((item) => item.id !== id));
+  }
+
   return (
     <div className="app">
       <h1> 🏝️Far Away🛍️</h1>
       <Form onAddItems={handleItems} />
-      <List items={items} />
+      <List items={items} onDeleteItems={handleDeleteItems} />
     </div>
   );
 }
@@ -60,22 +66,24 @@ function Form({ onAddItems }) {
     </form>
   );
 }
-function List({ items }) {
+function List({ items, onDeleteItems }) {
   return (
     <div className="list">
       <ul>
         {items.map((item) => (
-          <Listing key={item.id} items={item} />
+          <Listing key={item.id} items={item} deleteHandler={onDeleteItems} />
         ))}
       </ul>
     </div>
   );
 }
-function Listing({ items }) {
+function Listing({ items, deleteHandler }) {
   return (
     <>
       <li>
+        <input type="checkbox" />
         {items.quantity}-{items.description}
+        <button onClick={() => deleteHandler(items.id)}>✖️</button>
       </li>
     </>
   );
