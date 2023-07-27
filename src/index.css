@@ -114,6 +114,7 @@ input {
   display: flex;
   align-items: center;
   gap: 1.2rem;
+  /* text-decoration: line-through; */
 }
 
 input[type="checkbox"] {
