@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./index.css";
 import Form from "./components/Form";
 import List from "./components/List";
+import Footer from "./components/Footer";
 
 function App() {
   //lifting in parent so that it can be accesible for the children
@@ -17,7 +18,8 @@ function App() {
     setItems((prevItem) => prevItem.filter((item) => item.id !== id));
   }
 
-  //determine if the item is packed or not in controlled way
+  //**determine if the item is packed or not in controlled way
+
   function handlerToggleItem(id) {
     setItems((items) =>
       items.map((prevItem) =>
@@ -37,8 +39,8 @@ function App() {
         onDeleteItems={handleDeleteItems}
         onToggleItems={handlerToggleItem}
       />
+      <Footer items={items} />
     </div>
   );
 }
-
 export default App;
