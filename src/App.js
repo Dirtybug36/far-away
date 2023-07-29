@@ -3,9 +3,10 @@ import "./index.css";
 import Form from "./components/Form";
 import List from "./components/List";
 import Footer from "./components/Footer";
+import Header from "./Header";
 
 function App() {
-  //lifting in parent so that it can be accesible for the children
+  //lifting in parent so that it can be accessible for the children
   const [items, setItems] = useState([]);
 
   //create a function so that the children can use setitems
@@ -29,15 +30,24 @@ function App() {
       )
     );
   }
+  //clear all function
+  function handlerClear() {
+    if (!items.length) return;
+    const confirm = window.confirm("Are you sure you want to clear the list");
+    if (confirm) {
+      setItems([]);
+    }
+  }
 
   return (
     <div className="app">
-      <h1> 🏝️Far Away🛍️</h1>
+      <Header />
       <Form onAddItems={handleItems} />
       <List
         items={items}
         onDeleteItems={handleDeleteItems}
         onToggleItems={handlerToggleItem}
+        onClearItems={handlerClear}
       />
       <Footer items={items} />
     </div>
